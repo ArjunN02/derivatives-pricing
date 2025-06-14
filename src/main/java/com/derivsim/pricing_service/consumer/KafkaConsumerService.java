@@ -1,0 +1,30 @@
+package com.derivsim.pricing_service.consumer;
+
+import com.derivsim.pricing_service.entity.PricingResultEntity;
+import com.derivsim.pricing_service.model.PricingResult;
+import com.derivsim.pricing_service.repository.PricingResultRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
+@Service
+public class KafkaConsumerService {
+
+    @Autowired
+    private PricingResultRepository repository;
+
+    @KafkaListener(topics = "pricing-results-topic", groupId = "pricing-consumer-group")
+    public void consume(PricingResult result) {
+        System.out.println("RECEIVED FROM KAFKA: " + result);  // Add this
+
+        PricingResultEntity entity = new PricingResultEntity(
+                result.getSymbol(),
+                result.getPrice(),
+                result.getModel(),
+                result.getTimestamp()
+        );
+
+        repository.save(entity);
+        System.out.println("✅ Saved pricing result to DB: " + result.getSymbol());
+    }
+}
