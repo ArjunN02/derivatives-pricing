@@ -22,7 +22,19 @@ public class HedgingEngineService {
 
         // Simple delta hedge logic
 
-        String action = (result.getPrice() > 100) ? "SELL STOCK" : "BUY STOCK";
+        String action;
+
+        if (result.getModel().equals("BinomialTree") && result.getDelta() == 0.0) {
+            action = (result.getPrice() > 100) ? "SELL STOCK" : "BUY STOCK";
+        } else {
+            if (Math.abs(result.getDelta()) < 0.2) {
+                action = "HOLD";
+            } else if (result.getDelta() > 0.2) {
+                action = "BUY STOCK";
+            } else {
+                action = "SELL STOCK";
+            }
+        }
 
         HedgingActionEntity hedge = new HedgingActionEntity(
                 result.getSymbol(),
