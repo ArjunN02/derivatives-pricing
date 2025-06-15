@@ -8,15 +8,20 @@ public class PricingResult {
     private double price;
     private String model;
     private LocalDateTime timestamp;
+    private double delta;
+    private double gamma;
 
     public PricingResult() {}
 
-    public PricingResult(String symbol, double price, String model, LocalDateTime timestamp) {
+    public PricingResult(String symbol, double price, String model, LocalDateTime timestamp, double delta, double gamma) {
         this.symbol = symbol;
         this.price = price;
         this.model = model;
         this.timestamp = timestamp;
+        this.delta = delta;
+        this.gamma = gamma;
     }
+
 
     public String getSymbol() {
         return symbol;
@@ -49,4 +54,20 @@ public class PricingResult {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+    public double getDelta() {
+        return delta;
+    }
+
+    public void setDelta(double delta) {
+        this.delta = delta;
+    }
+
+    public double getGamma() {
+        return gamma;
+    }
+
+    public void setGamma(double gamma) {
+        this.gamma = gamma;
+    }
+
 }

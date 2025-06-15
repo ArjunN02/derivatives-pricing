@@ -33,5 +33,7 @@ public class HedgingEngineService {
         );
 
         hedgingRepo.save(hedge);
+        System.out.println("✅ SAVED TO hedging_log: " + result.getSymbol());
+
     }
 }
