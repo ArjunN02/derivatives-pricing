@@ -13,9 +13,13 @@ public class KafkaConsumerService {
     @Autowired
     private PricingResultRepository repository;
 
-    @KafkaListener(topics = "pricing-results-topic", groupId = "pricing-consumer-group")
+    @KafkaListener(
+            topics = "pricing-results-topic",
+            groupId = "pricing-consumer-group",
+            containerFactory = "pricingKafkaListenerFactory"
+    )
     public void consume(PricingResult result) {
-        System.out.println("RECEIVED FROM KAFKA: " + result);  // Add this
+        System.out.println("RECEIVED FROM KAFKA: " + result);
 
         PricingResultEntity entity = new PricingResultEntity(
                 result.getSymbol(),
@@ -25,6 +29,6 @@ public class KafkaConsumerService {
         );
 
         repository.save(entity);
-        System.out.println("✅ Saved pricing result to DB: " + result.getSymbol());
+        System.out.println("Saved pricing result to DB: " + result.getSymbol());
     }
 }

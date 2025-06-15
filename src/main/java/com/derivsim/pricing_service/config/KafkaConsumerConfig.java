@@ -19,26 +19,30 @@ import java.util.Map;
 public class KafkaConsumerConfig {
 
     @Bean
-    public ConsumerFactory<String, PricingResult> consumerFactory() {
-        JsonDeserializer<PricingResult> deserializer = new JsonDeserializer<>(PricingResult.class);
-        deserializer.setRemoveTypeHeaders(false);
-        deserializer.addTrustedPackages("*");
-        deserializer.setUseTypeMapperForKey(true);
+    public ConsumerFactory<String, PricingResult> pricingResultConsumerFactory() {
+        JsonDeserializer<PricingResult> deserializer = new JsonDeserializer<>(PricingResult.class, false);
+        deserializer.addTrustedPackages("*"); // allow all package sources
 
-        Map<String, Object> config = new HashMap<>();
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "pricing-consumer-group");
-        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "hedging-group");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
-        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), deserializer);
+        return new DefaultKafkaConsumerFactory<>(
+                props,
+                new StringDeserializer(),
+                deserializer
+        );
     }
 
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PricingResult> kafkaListenerContainerFactory() {
+
+    @Bean(name = "pricingKafkaListenerFactory")
+    public ConcurrentKafkaListenerContainerFactory<String, PricingResult> pricingKafkaListenerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, PricingResult> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(pricingResultConsumerFactory());  // use your existing consumerFactory() method
         return factory;
     }
+
 }
