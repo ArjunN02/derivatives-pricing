@@ -8,7 +8,9 @@ import com.derivsim.pricing_service.repository.PricingResultRepository;
 import com.derivsim.pricing_service.service.BlackScholesService;
 import com.derivsim.pricing_service.service.KafkaProducerService;
 import com.derivsim.pricing_service.service.BinomialTreeService;
-
+import com.derivsim.pricing_service.entity.HedgingActionEntity;
+import com.derivsim.pricing_service.repository.HedgingActionRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +42,7 @@ public class QuoteController {
                 req.getVolatility(),
                 req.getRiskFreeRate(),
                 req.getTimeToMaturity(),
-                req.isCall()
-        );
+                req.isCall());
 
         // 2. Compute result using selected model
         PricingResult result;
@@ -58,10 +59,9 @@ public class QuoteController {
                         req.getModel(),
                         LocalDateTime.now(),
                         0.0, // delta
-                        0.0  // gamma
+                        0.0 // gamma
                 );
                 break;
-
 
         }
 
@@ -73,9 +73,35 @@ public class QuoteController {
                 result.getSymbol(),
                 result.getPrice(),
                 result.getModel(),
-                result.getTimestamp()
-        );
+                result.getTimestamp());
 
         return result;
+    }
+
+    @Autowired
+    private HedgingActionRepository hedgingActionRepository;
+
+    @GetMapping("/hedging-actions")
+    public List<HedgingActionEntity> getHedgingActions(
+            @RequestParam(required = false) String symbol,
+            @RequestParam(required = false) String model) {
+        if (symbol != null && model != null) {
+            return hedgingActionRepository.findBySymbolAndModelOrderByTimestampDesc(symbol, model);
+        } else if (symbol != null) {
+            return hedgingActionRepository.findBySymbolOrderByTimestampDesc(symbol);
+        } else if (model != null) {
+            return hedgingActionRepository.findByModelOrderByTimestampDesc(model);
+        } else {
+            return hedgingActionRepository.findTop50ByOrderByTimestampDesc();
+        }
+    }
+
+    @GetMapping("/hedging-actions/latest")
+    public HedgingActionEntity getLatestHedgingAction(
+            @RequestParam String symbol,
+            @RequestParam String model) {
+        List<HedgingActionEntity> actions = hedgingActionRepository.findTop1BySymbolAndModelOrderByTimestampDesc(symbol,
+                model);
+        return actions.isEmpty() ? null : actions.get(0);
     }
 }
