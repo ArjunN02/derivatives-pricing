@@ -43,7 +43,7 @@ public class QuoteController {
                 req.getRiskFreeRate(),
                 req.getTimeToMaturity(),
                 req.isCall());
-
+        System.out.println("controller req " + req.isCall());
         // 2. Compute result using selected model
         PricingResult result;
         switch (req.getModel()) {
