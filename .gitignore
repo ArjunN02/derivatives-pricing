@@ -33,3 +33,53 @@ build/
 .vscode/
 
 src/main/resources/application.yml
+=======
+# Node modules (React frontend)
+react-app/node_modules/
+
+# Build output
+react-app/dist/
+react-app/build/
+
+# Dependency lock files
+react-app/package-lock.json
+react-app/yarn.lock
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Python cache and virtual envs
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+src/main/scripts/.env
+src/main/scripts/venv/
+src/main/scripts/env/
+
+# Java build output
+target/
+bin/
+*.class
+
+# Logs
+*.log
+
+# Sensitive config files
+src/main/resources/application.yml
+src/main/resources/application.properties
+
+# Misc
+*.bak
+*.tmp
+*.old
+
+# Ignore OneDrive sync files
+*.lnk
+~$*
