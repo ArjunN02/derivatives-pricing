@@ -16,7 +16,8 @@ public class HedgingActionEntity {
     private String model;
     private LocalDateTime timestamp;
 
-    public HedgingActionEntity() {}
+    public HedgingActionEntity() {
+    }
 
     public HedgingActionEntity(String symbol, String action, double price, String model, LocalDateTime timestamp) {
         this.symbol = symbol;
@@ -27,4 +28,51 @@ public class HedgingActionEntity {
     }
 
     // Getters & setters (generate via Lombok or manually)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 }

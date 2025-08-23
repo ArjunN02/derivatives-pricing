@@ -1,0 +1,16 @@
+[
+  {
+    "action": "BUY STOCK",
+    "model": "BlackScholes",
+    "price": 11.533587683219537,
+    "symbol": "AAPL",
+    "timestamp": "2025-06-15 11:59:39.395903"
+  },
+  {
+    "action": "BUY STOCK",
+    "model": "BlackScholes",
+    "price": 16.240649818075028,
+    "symbol": "AAPL",
+    "timestamp": "2025-06-15 11:43:58.388184"
+  }
+]
