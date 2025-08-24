@@ -15,16 +15,30 @@ public class PricingResultEntity {
     private String model;
     private LocalDateTime timestamp;
 
-    // Getters, setters, constructor(s)
-    // Required by JPA
+    // new fields to capture request params
+    private double spotPrice;
+    private double strikePrice;
+    private double volatility;
+    private double riskFreeRate;
+    private double timeToMaturity;
+    private boolean isCall;
+
     public PricingResultEntity() {}
 
-    public PricingResultEntity(String symbol, double price, String model, LocalDateTime timestamp) {
+    public PricingResultEntity(String symbol, double price, String model, LocalDateTime timestamp,
+                               double spotPrice, double strikePrice, double volatility,
+                               double riskFreeRate, double timeToMaturity, boolean isCall) {
         this.symbol = symbol;
         this.price = price;
         this.model = model;
         this.timestamp = timestamp;
+        this.spotPrice = spotPrice;
+        this.strikePrice = strikePrice;
+        this.volatility = volatility;
+        this.riskFreeRate = riskFreeRate;
+        this.timeToMaturity = timeToMaturity;
+        this.isCall = isCall;
     }
 
-    // Getters and Setters here
+    // getters & setters
 }

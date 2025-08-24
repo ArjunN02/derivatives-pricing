@@ -73,8 +73,15 @@ public class QuoteController {
                 result.getSymbol(),
                 result.getPrice(),
                 result.getModel(),
-                result.getTimestamp());
-
+                result.getTimestamp(),
+                req.getSpotPrice(),
+                req.getStrikePrice(),
+                req.getVolatility(),
+                req.getRiskFreeRate(),
+                req.getTimeToMaturity(),
+                req.isCall()
+        );
+        pricingResultRepository.save(entity);
         return result;
     }
 
