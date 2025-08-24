@@ -68,6 +68,7 @@ target/
 bin/
 *.class
 
+kafkasteps.txt
 # Logs
 *.log
 
