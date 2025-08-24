@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 
 
@@ -11,23 +14,14 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuoteRequest {
-    private String symbol;
-    private double spotPrice;
-    private double strikePrice;
-    private double volatility;
-    private double riskFreeRate;
-    private double timeToMaturity;
-    private boolean isCall;
-    private String model; // e.g., "BLACK_SCHOLES", "BINOMIAL"
-
-    public String getSymbol() { return symbol; }
-    public double getSpotPrice() { return spotPrice; }
-    public double getStrikePrice() { return strikePrice; }
-    public double getVolatility() { return volatility; }
-    public double getRiskFreeRate() { return riskFreeRate; }
-    public double getTimeToMaturity() { return timeToMaturity; }
-    public boolean isCall() { return isCall; }
-    public String getModel() { return model; }
-
-    // Optionally: setters and constructor
+    private @Getter @Setter String symbol;
+    private @Getter @Setter double spotPrice;
+    private @Getter @Setter double strikePrice;
+    private @Getter @Setter double volatility;
+    private @Getter @Setter double riskFreeRate;
+    private @Getter @Setter double timeToMaturity;
+    
+    @JsonProperty("isCall")
+    private @Getter @Setter boolean call;
+    private @Getter @Setter String model;
 }

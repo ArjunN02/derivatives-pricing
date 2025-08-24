@@ -20,15 +20,5 @@ public class KafkaConsumerService {
     )
     public void consume(PricingResult result) {
         System.out.println("RECEIVED FROM KAFKA: " + result);
-
-        PricingResultEntity entity = new PricingResultEntity(
-                result.getSymbol(),
-                result.getPrice(),
-                result.getModel(),
-                result.getTimestamp()
-        );
-
-        repository.save(entity);
-        System.out.println("Saved pricing result to DB: " + result.getSymbol());
     }
 }
